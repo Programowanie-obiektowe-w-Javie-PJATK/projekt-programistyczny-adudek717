@@ -44,7 +44,7 @@ public class Controller {
 
     @FXML
     public void calc() {
-
+        outputLbl.setText(mapWords().toString());
     }
 
     @FXML
