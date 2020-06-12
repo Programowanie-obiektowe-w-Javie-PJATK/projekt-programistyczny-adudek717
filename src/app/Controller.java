@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -21,6 +22,12 @@ public class Controller {
     @FXML
     public void initialize() {
         outputLbl.setWrapText(true);
+        inputField.setOnKeyTyped(event -> {
+            String key = event.getCharacter();
+            if(key.equals(" ")){
+                calc();
+            }
+        });
     }
 
     @FXML
@@ -29,11 +36,12 @@ public class Controller {
         String input = inputField.getText();
 
         for (String word : input.split(" ")) {
-            if (!result.containsKey(word)) { // Create new entry
-                result.put(word, 1);
-            } else { // Increment value of existing key
-                result.put(word, result.get(word) + 1);
-            }
+            if (word.matches("[A-Za-z]*") && !word.equals(" ")) // Only words
+                if (!result.containsKey(word)) { // Create new entry
+                    result.put(word, 1);
+                } else { // Increment value of existing key
+                    result.put(word, result.get(word) + 1);
+                }
         }
         return result;
     }
