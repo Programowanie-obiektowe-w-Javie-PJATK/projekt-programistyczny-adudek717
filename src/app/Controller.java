@@ -70,8 +70,9 @@ public class Controller {
                 writer.printf("%s - %d\n", key, map.get(key));
             }
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error while creating a file!");
+            alert.showAndWait();
         }
     }
 }
