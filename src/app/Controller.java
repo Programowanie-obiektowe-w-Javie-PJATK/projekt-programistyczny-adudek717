@@ -1,13 +1,18 @@
 package app;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
-import java.util.EventListener;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
+
 
 public class Controller {
     @FXML
@@ -24,7 +29,7 @@ public class Controller {
         outputLbl.setWrapText(true);
         inputField.setOnKeyTyped(event -> {
             String key = event.getCharacter();
-            if(key.equals(" ")){
+            if (key.equals(" ")) {
                 calc();
             }
         });
@@ -36,7 +41,8 @@ public class Controller {
         String input = inputField.getText();
 
         for (String word : input.split(" ")) {
-            if (word.matches("[A-Za-z]*") && !word.equals(" ")) // Only words
+            word = word.replaceAll("[^A-Za-ząęńóśłźż]", "");
+            if (!word.equals("")) // Only words
                 if (!result.containsKey(word)) { // Create new entry
                     result.put(word, 1);
                 } else { // Increment value of existing key
@@ -53,6 +59,19 @@ public class Controller {
 
     @FXML
     public void save() {
-
+        File output = new File("output.txt");
+        try {
+            if (!output.exists()) { // File does not exist
+                output.createNewFile();
+            }
+            PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+            final LinkedHashMap<String, Integer> map = mapWords();
+            for (String key : map.keySet()) {
+                writer.printf("%s - %d\n", key, map.get(key));
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
