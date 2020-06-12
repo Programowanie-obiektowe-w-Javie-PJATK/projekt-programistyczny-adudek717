@@ -55,6 +55,19 @@ public class Controller {
 
     @FXML
     public void save() {
+        File output = new File("output.txt");
+        try {
+            if (!output.exists()) { // File does not exist
+                output.createNewFile();
+            }
+            PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
+            final LinkedHashMap<String, Integer> map = mapWords();
+            for (String key : map.keySet()) {
+                writer.printf("%s - %d\n", key, map.get(key));
+            }
+            writer.close();
+        } catch (Exception e) {
 
+        }
     }
 }
