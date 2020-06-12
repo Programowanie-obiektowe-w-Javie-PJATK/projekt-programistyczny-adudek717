@@ -22,7 +22,13 @@ public class Controller {
 
     @FXML
     public void initialize() {
-
+        outputLbl.setWrapText(true);
+        inputField.setOnKeyTyped(event -> {
+            String key = event.getCharacter();
+            if (key.equals(" ")) {
+                calc();
+            }
+        });
     }
 
     @FXML
