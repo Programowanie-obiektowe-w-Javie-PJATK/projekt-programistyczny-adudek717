@@ -28,7 +28,17 @@ public class Controller {
     @FXML
     public LinkedHashMap<String, Integer> mapWords() {
         final LinkedHashMap<String, Integer> result = new LinkedHashMap<>();
+        String input = inputField.getText();
 
+        for (String word : input.split(" ")) {
+            word = word.replaceAll("[^A-Za-ząęńóśłźż]", "");
+            if (!word.equals("")) // Only words
+                if (!result.containsKey(word)) { // Create new entry
+                    result.put(word, 1);
+                } else { // Increment value of existing key
+                    result.put(word, result.get(word) + 1);
+                }
+        }
         return result;
     }
 
