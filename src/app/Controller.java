@@ -67,7 +67,8 @@ public class Controller {
             }
             writer.close();
         } catch (Exception e) {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error while creating a file!");
+            alert.showAndWait();
         }
     }
 }
